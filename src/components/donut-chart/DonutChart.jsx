@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import Svg, {Circle, Path} from 'react-native-svg';
-import {primaryColors} from '../../constants/colors';
+import {dangerColors, primaryColors} from '../../constants/colors';
 
 const DonutChart = ({numerator, denominator, radius, strokeWidth}) => {
   const percentage = numerator / denominator;
@@ -16,8 +16,8 @@ const DonutChart = ({numerator, denominator, radius, strokeWidth}) => {
           cy={radius}
           r={radius - strokeWidth / 2}
           strokeWidth={strokeWidth}
-          stroke="#ccc"
-          fill={0}
+          stroke={numerator === 0 ? dangerColors.main : primaryColors.main}
+          fill="transparent"
         />
         <Path
           d={`M ${radius}, ${strokeWidth / 2} a ${radius - strokeWidth / 2}, ${
@@ -29,7 +29,7 @@ const DonutChart = ({numerator, denominator, radius, strokeWidth}) => {
           }`}
           strokeWidth={strokeWidth}
           strokeDasharray={strokeDasharray}
-          stroke={primaryColors.main}
+          stroke={numerator === 0 ? dangerColors.main : primaryColors.fade}
           fill="transparent"
         />
       </Svg>
