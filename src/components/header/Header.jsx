@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Image, Text, TouchableHighlight} from 'react-native';
+import {Image, Text, TouchableHighlight, TouchableOpacity} from 'react-native';
 import {backgroundColors} from '../../constants/colors';
 import logo from '../../assets/images/logo.png';
 import helpIcon from '../../assets/icons/question.png';
@@ -29,9 +29,9 @@ const Header = ({navigation}) => {
     <HeaderWrap>
       <Icon source={helpIcon} resizeMode="contain" />
       <Logo source={logo} resizeMode="contain" />
-      <TouchableHighlight onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Icon source={adminIcon} resizeMode="contain" />
-      </TouchableHighlight>
+      </TouchableOpacity>
     </HeaderWrap>
   );
 };

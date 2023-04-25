@@ -7,7 +7,7 @@ import CarParkingCanvas from '../../components/parking-lot/ParkingLot';
 
 const Home = ({navigation}) => {
   const parkingAvailability = {
-    available: 15,
+    available: 2,
     total: 30,
   };
 

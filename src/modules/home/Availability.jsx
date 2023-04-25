@@ -12,7 +12,7 @@ const AvailabilityWrap = styled.View`
 
 const AvailabilityText = styled.Text`
   position: absolute;
-  left: 11%;
+  ${props => (props.isTwoDigit ? 'left: 9%' : 'left: 11%')};
   top: 35%;
   font-size: 36px;
   justify-content: center;
@@ -37,7 +37,7 @@ const Availability = ({available, total}) => {
           radius={80}
           strokeWidth={15}
         />
-        <AvailabilityText>
+        <AvailabilityText isTwoDigit={available > 9 ? true : false}>
           {available}/{total}
         </AvailabilityText>
       </AvailabilityWrap>

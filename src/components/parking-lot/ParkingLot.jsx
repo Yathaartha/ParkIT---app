@@ -44,7 +44,10 @@ const CarParkingCanvas = () => {
         const image = new Image(canvas);
         image.src = `https://raw.githubusercontent.com/Yathaartha/ParkIT-app/master/src/assets/images/car-top-view.png`;
 
-        ctx.drawImage(image, 20, 15, CAR_WIDTH, CAR_HEIGHT);
+        image.addEventListener('load', function () {
+          ctx.drawImage(image, 20, 15, CAR_WIDTH, CAR_HEIGHT);
+        });
+        ctx.stroke();
       }
     }
   }, []);
