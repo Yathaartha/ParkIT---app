@@ -39,6 +39,7 @@ const CarParkingCanvas = () => {
           x = createBottomParkingLot(ctx, x, y);
           x += SLOT_GAP;
         }
+        ctx.stroke();
 
         const image = new Image(canvas);
         image.src = `https://raw.githubusercontent.com/Yathaartha/ParkIT-app/master/src/assets/images/car-top-view.png`;

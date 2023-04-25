@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import DonutChart from '../../donut-chart/DonutChart';
+import DonutChart from '../../components/donut-chart/DonutChart';
 import {Text} from 'react-native';
-import {colors} from '../../../constants/colors';
+import {colors} from '../../constants/colors';
 
 const AvailabilityWrap = styled.View`
   margin: 20px auto;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native';
 import styled from 'styled-components';
-import {dangerColors, primaryColors} from '../../../constants/colors';
+import {dangerColors, primaryColors} from '../../constants/colors';
 
 const ButtonWrap = styled.View`
   padding: 20px;

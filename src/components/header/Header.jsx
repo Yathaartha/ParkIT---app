@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Image, Text} from 'react-native';
+import {Image, Text, TouchableHighlight} from 'react-native';
 import {backgroundColors} from '../../constants/colors';
 import logo from '../../assets/images/logo.png';
 import helpIcon from '../../assets/icons/question.png';
@@ -24,12 +24,14 @@ const Logo = styled.Image`
   width: 100px;
 `;
 
-const Header = () => {
+const Header = ({navigation}) => {
   return (
     <HeaderWrap>
       <Icon source={helpIcon} resizeMode="contain" />
       <Logo source={logo} resizeMode="contain" />
-      <Icon source={adminIcon} resizeMode="contain" />
+      <TouchableHighlight onPress={() => navigation.navigate('Login')}>
+        <Icon source={adminIcon} resizeMode="contain" />
+      </TouchableHighlight>
     </HeaderWrap>
   );
 };
