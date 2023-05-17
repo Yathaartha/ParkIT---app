@@ -32,7 +32,7 @@ const LoginForm = () => {
     try {
       const response = dispatch(loginAsync({username, password}));
 
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +82,7 @@ const LoginForm = () => {
       <Text>
         {focus.includes('password') && password === '' ? 'error' : ''}
       </Text>
-      <Text>{loginState.response}</Text>
+      <Text>{loginState.response.data ? 'success' : 'invalid'}</Text>
       <PrimaryButton
         title="Login"
         onPress={() => {

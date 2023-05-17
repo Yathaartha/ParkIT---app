@@ -5,14 +5,11 @@ export const loginAsync = createAsyncThunk(
   '/admin/login',
   async ({username, password}) => {
     try {
-      const response = await baseApi.post('/admin/login', {
-        username,
-        password,
-      });
+      const response = await baseApi.post('/admin/login', {username, password});
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   },
 );
