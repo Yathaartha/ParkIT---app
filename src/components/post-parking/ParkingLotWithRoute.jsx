@@ -3,6 +3,7 @@ import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import Canvas, {Image} from 'react-native-canvas';
 import {useDispatch, useSelector} from 'react-redux';
 import {getParkingDetailsAsync} from './parkingSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SLOT_WIDTH = 20;
 const SLOT_HEIGHT = 40;
@@ -12,10 +13,14 @@ const SLOT_GAP = 0;
 const CAR_WIDTH = 20;
 const CAR_HEIGHT = 30;
 
-const CarParkingCanvas = ({showEntrance, showClosestParking}) => {
+const ParkingLotWithRoute = ({
+  showEntrance,
+  showClosestParking,
+  closestSlot,
+}) => {
   const canvasRef = useRef();
-  const dispatch = useDispatch();
-  const {parking, nearestSlot} = useSelector(state => state.park);
+  const [localData, setLocalData] = useState({});
+  const {parking} = useSelector(state => state.park);
   const [isLoading, setIsLoading] = useState(true);
 
   const getCarCoords = (lane, slot) => {
@@ -32,8 +37,14 @@ const CarParkingCanvas = ({showEntrance, showClosestParking}) => {
   };
 
   useEffect(() => {
-    dispatch(getParkingDetailsAsync());
-  }, []);
+    async function getLocalData() {
+      const data = await AsyncStorage.getItem('booking');
+
+      setLocalData(JSON.parse(data));
+    }
+
+    getLocalData();
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -100,14 +111,14 @@ const CarParkingCanvas = ({showEntrance, showClosestParking}) => {
           ctx.fillText('←', 350, 165);
         }
 
-        if (showClosestParking === true) {
+        if (showClosestParking === true && localData?.laneNumber) {
           ctx.beginPath();
           ctx.font = '15px arial';
           ctx.fillText(' - Nearest Empty Slot', 140, 30);
           ctx.fillStyle = '#f00';
           ctx.rect(130, 20, 10, 10);
           ctx.fill();
-          switch (nearestSlot.laneNumber) {
+          switch (localData.laneNumber) {
             case 1:
               y = 50;
               break;
@@ -122,7 +133,7 @@ const CarParkingCanvas = ({showEntrance, showClosestParking}) => {
               break;
           }
           ctx.rect(
-            20 * nearestSlot.slotNumber,
+            20 * localData.slotNumber,
             y,
             SLOT_WIDTH - 1,
             SLOT_HEIGHT - 1,
@@ -134,7 +145,7 @@ const CarParkingCanvas = ({showEntrance, showClosestParking}) => {
         // ctx.stroke();
       }
     }
-  }, [nearestSlot, parking.slots.length]);
+  }, [localData.laneNumber, parking.slots]);
 
   function createTopParkingLot(ctx, x, y) {
     ctx.lineTo(x + SLOT_WIDTH, y);
@@ -195,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarParkingCanvas;
+export default ParkingLotWithRoute;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-native';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {dangerColors, primaryColors} from '../../constants/colors';
 
@@ -12,12 +12,17 @@ const ParkBtn = styled.Button`
   padding: 30px 30px;
 `;
 
-const ParkButton = ({available}) => {
+const ParkButton = ({navigation}) => {
+  const {parking} = useSelector(state => state.park);
+
   return (
     <ButtonWrap>
       <ParkBtn
         title="Park"
-        color={available === 0 ? dangerColors.main : primaryColors.main}
+        color={
+          parking.availableSlots === 0 ? dangerColors.main : primaryColors.main
+        }
+        onPress={() => navigation.navigate('Parking')}
       />
     </ButtonWrap>
   );

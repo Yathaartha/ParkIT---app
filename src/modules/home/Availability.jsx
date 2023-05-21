@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import DonutChart from '../../components/donut-chart/DonutChart';
 import {Text} from 'react-native';
 import {colors} from '../../constants/colors';
+import {useSelector} from 'react-redux';
 
 const AvailabilityWrap = styled.View`
   margin: 20px auto;
@@ -27,22 +28,25 @@ const ExtraInformation = styled.Text`
   text-align: center;
 `;
 
-const Availability = ({available, total}) => {
+const Availability = ({total}) => {
+  const {parking} = useSelector(state => state.park);
+
   return (
     <>
       <AvailabilityWrap>
         <DonutChart
-          numerator={available}
+          numerator={parking.availableSlots}
           denominator={total}
           radius={80}
           strokeWidth={15}
         />
-        <AvailabilityText isTwoDigit={available > 9 ? true : false}>
-          {available}/{total}
+        <AvailabilityText
+          isTwoDigit={parking.availableSlots > 9 ? true : false}>
+          {parking.availableSlots}/{total}
         </AvailabilityText>
       </AvailabilityWrap>
       <ExtraInformation>
-        {available === 0
+        {parking.availableSlots === 0
           ? 'Parking spaces all booked!'
           : 'Parking spaces available now!'}
       </ExtraInformation>

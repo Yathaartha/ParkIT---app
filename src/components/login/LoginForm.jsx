@@ -36,28 +36,6 @@ const LoginForm = () => {
     } catch (error) {
       console.log(error);
     }
-
-    // if (response.data) {
-    //   setError('no error');
-    // } else {
-    //   setError('error');
-    // }
-    // console.log('inside handleSubmit');
-    // baseApi
-    //   .post('/admin/login', {
-    //     username,
-    //     password,
-    //   })
-    //   .then(response => {
-    //     if (response.data) {
-    //       setError('no error');
-    //     } else {
-    //       setError('error');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error.message);
-    //   });
   };
 
   return (

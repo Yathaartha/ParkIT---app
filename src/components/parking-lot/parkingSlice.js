@@ -14,16 +14,57 @@ export const getParkingDetailsAsync = createAsyncThunk(
   },
 );
 
+export const getNearestSlotAsync = createAsyncThunk(
+  '/park/nearest-slot',
+  async () => {
+    try {
+      const response = await baseApi.get('/park/nearest-slot');
+
+      return response.data.slot;
+    } catch (error) {
+      return error;
+    }
+  },
+);
+
 export const parkingSlice = createSlice({
   name: 'parking',
   initialState: {
-    parking: {total: 0, available: 0, occupied: 0},
+    parking: {
+      availableSlots: 68,
+      slots: [],
+    },
+    nearestSlot: {
+      id: null,
+      laneNumber: 4,
+      slotNumber: 1,
+      isAvailable: true,
+      distanceFromEntry: null,
+    },
   },
   reducers: {},
   extraReducers: builder => {
+    builder.addCase(getParkingDetailsAsync.pending, (state, action) => {
+      state.status = 'idle';
+      state.parking = {
+        availableSlots: 68,
+        slots: [],
+      };
+    });
     builder.addCase(getParkingDetailsAsync.fulfilled, (state, action) => {
       state.status = 'idle';
       state.parking = action.payload;
+    });
+    builder.addCase(getParkingDetailsAsync.rejected, (state, action) => {
+      state.status = 'idle';
+      state.parking = {
+        availableSlots: 68,
+        slots: [],
+      };
+    });
+    builder.addCase(getNearestSlotAsync.fulfilled, (state, action) => {
+      state.status = 'idle';
+      state.nearestSlot = action.payload;
     });
   },
 });

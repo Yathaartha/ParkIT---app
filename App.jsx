@@ -15,6 +15,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/views/auth/Login';
 import {Provider} from 'react-redux';
 import store from './src/store';
+import Parking from './src/views/Parking/Parking';
+import PostParking from './src/views/post-parking/PostParking';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,8 +37,18 @@ function App() {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="Parking"
+            component={Parking}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
             name="Login"
             component={Login}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="PostParking"
+            component={PostParking}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
