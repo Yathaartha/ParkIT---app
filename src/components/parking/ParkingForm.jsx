@@ -58,9 +58,15 @@ const ParkingForm = ({navigation}) => {
 
   const handleSubmit = () => {
     try {
-      dispatch(bookParkingSlotAsync({vehicleNumber, estimatedHours}));
+      const response = dispatch(
+        bookParkingSlotAsync({vehicleNumber, estimatedHours}),
+      );
 
-      navigation.navigate('PostParking');
+      if (response.error) {
+        console.log(response.error);
+      } else {
+        navigation.navigate('PostParking');
+      }
     } catch (error) {
       console.log(error);
     }

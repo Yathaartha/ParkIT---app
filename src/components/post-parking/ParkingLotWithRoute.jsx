@@ -105,12 +105,6 @@ const ParkingLotWithRoute = ({
           setIsLoading(false);
         });
 
-        if (showEntrance) {
-          ctx.font = '36px serif';
-          ctx.fillStyle = '#000';
-          ctx.fillText('←', 350, 165);
-        }
-
         if (showClosestParking === true && localData?.laneNumber) {
           ctx.beginPath();
           ctx.font = '15px arial';
@@ -140,12 +134,39 @@ const ParkingLotWithRoute = ({
           );
           ctx.fill();
           ctx.stroke();
+          drawRoute(ctx, localData.laneNumber);
         }
 
         // ctx.stroke();
       }
     }
   }, [localData.laneNumber, parking.slots]);
+
+  const drawRoute = (ctx, lane) => {
+    ctx.strokeStyle = '#ADD8E6';
+    ctx.moveTo(CANVAS_WIDTH - 10, 160);
+    ctx.lineWidth = 4;
+    switch (lane) {
+      case 1:
+        ctx.lineTo(CANVAS_WIDTH - 10, 40);
+        ctx.lineTo(20 * localData.slotNumber + 10, 40);
+        ctx.lineTo(20 * localData.slotNumber + 10, 50);
+        break;
+      case 2:
+        ctx.lineTo(20 * localData.slotNumber + 10, 160);
+        ctx.lineTo(20 * localData.slotNumber + 10, 101 + SLOT_HEIGHT);
+        break;
+      case 3:
+        ctx.lineTo(20 * localData.slotNumber + 10, 160);
+        ctx.lineTo(20 * localData.slotNumber + 10, 180);
+        break;
+      case 4:
+        ctx.lineTo(CANVAS_WIDTH - 10, 240);
+        ctx.lineTo(20 * localData.slotNumber + 10, 240);
+        ctx.lineTo(20 * localData.slotNumber + 10, 230);
+    }
+    ctx.stroke();
+  };
 
   function createTopParkingLot(ctx, x, y) {
     ctx.lineTo(x + SLOT_WIDTH, y);

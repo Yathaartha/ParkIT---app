@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
@@ -22,10 +23,17 @@ const ParkingDetails = () => {
       </Text>
       <Text>Lane Number: {details.laneNumber ? details.laneNumber : '-'}</Text>
       <Text>Slot Number: {details.slotNumber ? details.slotNumber : '-'}</Text>
-      <Text>Start Time: {details.entryTime ? details.entryTime : '-'} </Text>
+      <Text>
+        Start Time:{' '}
+        {details.entryTime
+          ? moment(details.entryTime).format('DD/MM hh:mm A')
+          : '-'}{' '}
+      </Text>
       <Text>
         Estimated time:{' '}
-        {details.estimatedExitTime ? details.estimatedExitTime : '-'}
+        {details.estimatedExitTime
+          ? moment(details.estimatedExitTime).format('DD/MM hh:mm A')
+          : '-'}
       </Text>
     </View>
   );
@@ -34,7 +42,7 @@ const ParkingDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 20,
   },
 });
 
