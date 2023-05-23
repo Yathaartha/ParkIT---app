@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import LoginForm from '../../components/login/LoginForm';
-const Login = () => {
+
+const Login = ({navigation}) => {
   return (
     <View>
       <Text>Login</Text>
-      <LoginForm />
+      <LoginForm navigation={navigation} />
     </View>
   );
 };

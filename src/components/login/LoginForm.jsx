@@ -19,7 +19,7 @@ const FormWrap = styled.View`
   height: 100%;
 `;
 
-const LoginForm = () => {
+const LoginForm = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [focus, setFocus] = useState([]);
@@ -28,11 +28,13 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const loginState = useSelector(state => state.login);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      const response = dispatch(loginAsync({username, password}));
+      const response = await dispatch(loginAsync({username, password}));
 
-      console.log(response.data);
+      if (loginState.response.data) {
+        navigation.navigate('AdminDashboard');
+      }
     } catch (error) {
       console.log(error);
     }

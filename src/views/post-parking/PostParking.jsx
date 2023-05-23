@@ -45,10 +45,10 @@ const PostParking = ({navigation}) => {
 
   const createnAlert = () => {
     const entryTime = moment(localData.entryTime);
-    const exitTime = moment.now();
+    const exitTime = moment();
 
-    const timeDiff = Math.abs(exitTime - entryTime);
-    const hours = Math.floor(timeDiff / 1000 / 60 / 60);
+    const timeDiff = exitTime.diff(entryTime);
+    const hours = moment.duration(timeDiff).asHours();
     const amount = Math.max(hours * 0.5, 0.25);
     Alert.alert(
       'Are you sure you want to exit?',

@@ -18,6 +18,7 @@ import store from './src/store';
 import Parking from './src/views/Parking/Parking';
 import PostParking from './src/views/post-parking/PostParking';
 import Loading from './src/views/Loading/Loading';
+import AdminDashboard from './src/views/admin/AdminDashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +65,11 @@ function App() {
             name="PostParking"
             component={PostParking}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="AdminDashboard"
+            component={AdminDashboard}
+            options={{headerShown: true}}
           />
         </Stack.Navigator>
       </NavigationContainer>
