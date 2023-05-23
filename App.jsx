@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -17,11 +17,25 @@ import {Provider} from 'react-redux';
 import store from './src/store';
 import Parking from './src/views/Parking/Parking';
 import PostParking from './src/views/post-parking/PostParking';
+import Loading from './src/views/Loading/Loading';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating the app loading time
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Set the desired loading time here
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
