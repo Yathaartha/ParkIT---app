@@ -8,10 +8,20 @@ import {useDispatch} from 'react-redux';
 import {exitParkingSlotAsync} from '../../components/post-parking/exitSlice';
 import ParkingLotWithRoute from '../../components/post-parking/ParkingLotWithRoute';
 import moment from 'moment';
+import RestaurantRecommendations from '../../components/restaurant-recommendations/RestaurantRecommendations';
 
 const PostParking = ({navigation}) => {
   const [localData, setLocalData] = useState({});
   const dispatch = useDispatch();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     async function getLocalData() {
@@ -59,9 +69,14 @@ const PostParking = ({navigation}) => {
       <ParkTimer />
       <ParkingDetails />
       <ParkingLotWithRoute showEntrance={true} showClosestParking={true} />
+      <PrimaryButton title="Nearby Restaurants" onPress={openModal} />
       <PrimaryButton
         title="End Parking Session"
         onPress={() => createnAlert()}
+      />
+      <RestaurantRecommendations
+        visible={modalVisible}
+        closeModal={closeModal}
       />
     </ScrollView>
   );
