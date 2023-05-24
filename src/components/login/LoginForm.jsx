@@ -30,7 +30,7 @@ const LoginForm = ({navigation}) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await dispatch(loginAsync({username, password}));
+      dispatch(loginAsync({username, password}));
 
       if (loginState.response.data) {
         navigation.navigate('AdminDashboard');

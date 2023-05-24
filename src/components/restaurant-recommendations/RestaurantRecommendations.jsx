@@ -9,7 +9,6 @@ import {
   Button,
   ScrollView,
 } from 'react-native';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import PrimaryButton from '../common/PrimaryButton';

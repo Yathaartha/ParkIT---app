@@ -19,12 +19,11 @@ import Parking from './src/views/Parking/Parking';
 import PostParking from './src/views/post-parking/PostParking';
 import Loading from './src/views/Loading/Loading';
 import AdminDashboard from './src/views/admin/AdminDashboard';
+import FAQScreen from './src/views/FAQ/FaqScreen';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,10 +36,6 @@ function App() {
   if (isLoading) {
     return <Loading />;
   }
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
     <Provider store={store}>
@@ -69,6 +64,11 @@ function App() {
           <Stack.Screen
             name="AdminDashboard"
             component={AdminDashboard}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="FAQ"
+            component={FAQScreen}
             options={{headerShown: true}}
           />
         </Stack.Navigator>

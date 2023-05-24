@@ -43,7 +43,7 @@ const PostParking = ({navigation}) => {
     }
   };
 
-  const createnAlert = () => {
+  const createAlert = () => {
     const entryTime = moment(localData.entryTime);
     const exitTime = moment();
 
@@ -72,7 +72,7 @@ const PostParking = ({navigation}) => {
       <PrimaryButton title="Nearby Restaurants" onPress={openModal} />
       <PrimaryButton
         title="End Parking Session"
-        onPress={() => createnAlert()}
+        onPress={() => createAlert()}
       />
       <RestaurantRecommendations
         visible={modalVisible}

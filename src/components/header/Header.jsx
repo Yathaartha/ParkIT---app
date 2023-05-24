@@ -27,7 +27,9 @@ const Logo = styled.Image`
 const Header = ({navigation}) => {
   return (
     <HeaderWrap>
-      <Icon source={helpIcon} resizeMode="contain" />
+      <TouchableOpacity onPress={() => navigation.navigate('FAQ')}>
+        <Icon source={helpIcon} resizeMode="contain" />
+      </TouchableOpacity>
       <Logo source={logo} resizeMode="contain" />
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Icon source={adminIcon} resizeMode="contain" />
