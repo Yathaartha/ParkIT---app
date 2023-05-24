@@ -63,7 +63,7 @@ const Home = ({navigation}) => {
           style={{
             textAlign: 'center',
           }}>
-          Already have a booking?
+          Already have a booking? Press here
         </Text>
       </TouchableOpacity>
       <CarParkingCanvas showEntrance={false} showClosestParking={false} />

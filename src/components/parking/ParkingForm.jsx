@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {
   TextInput,
@@ -6,11 +6,14 @@ import {
   Text,
   Button,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import {colors, primaryColors} from '../../constants/colors';
 import PrimaryButton from '../common/PrimaryButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {bookParkingSlotAsync} from './bookingSlice';
+import ErrorText from '../common/ErrorText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -56,21 +59,57 @@ const ParkingForm = ({navigation}) => {
   const dispatch = useDispatch();
   const {booking} = useSelector(state => state.book);
 
-  const handleSubmit = () => {
-    try {
-      const response = dispatch(
-        bookParkingSlotAsync({vehicleNumber, estimatedHours}),
-      );
+  const handleSubmit = async needCover => {
+    if (error === '') {
+      try {
+        const response = dispatch(
+          bookParkingSlotAsync({vehicleNumber, estimatedHours, needCover}),
+        );
 
-      if (response.error) {
-        console.log(response.error);
-      } else {
-        navigation.navigate('PostParking');
+        if (response.error) {
+          console.log(response.error);
+        } else {
+          await AsyncStorage.setItem(
+            'booking',
+            JSON.stringify(response.payload.data),
+          );
+          navigation.navigate('PostParking');
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      Alert.alert('Please fill in the form correctly');
     }
   };
+
+  const createAlert = () => {
+    Alert.alert(
+      'Would you like your vehicle to be covered?',
+      `Extra charges may apply.`,
+      [
+        {
+          text: 'No',
+          onPress: () => handleSubmit(false),
+          style: 'cancel',
+        },
+        {text: 'Yes', onPress: () => handleSubmit(true)},
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  useEffect(() => {
+    if (focus.includes('vehicleNumber') && vehicleNumber === '') {
+      setError('Vehicle number is empty');
+    } else if (focus.includes('estimatedHours') && estimatedHours === '') {
+      setError('Estimated hours is empty');
+    } else {
+      setError('');
+    }
+  }, [vehicleNumber, focus, estimatedHours]);
 
   return (
     <FormWrap>
@@ -79,9 +118,10 @@ const ParkingForm = ({navigation}) => {
         <SubmitButton
           title="Submit"
           color={primaryColors.main}
-          onPress={() => handleSubmit()}
+          onPress={() => createAlert()}
         />
       </FormHeader>
+      <ErrorText text={error} />
       <InputLabel>Vehicle Number</InputLabel>
       <Input
         placeholder="eg: 4A5-1234"

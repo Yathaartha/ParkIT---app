@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {baseApi} from '../../api/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const bookParkingSlotAsync = createAsyncThunk(
   '/park/book',
@@ -10,8 +9,6 @@ export const bookParkingSlotAsync = createAsyncThunk(
         vehicleNumber,
         estimatedHours,
       });
-
-      await AsyncStorage.setItem('booking', JSON.stringify(response.data));
 
       return response.data;
     } catch (error) {
