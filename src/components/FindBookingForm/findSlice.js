@@ -1,11 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {baseApi} from '../../api/api';
 
-export const loginAsync = createAsyncThunk(
-  '/admin/login',
-  async ({username, password}) => {
+export const searchAsync = createAsyncThunk(
+  '/park/search',
+  async ({vehicleNumber}) => {
     try {
-      const response = await baseApi.post('/admin/login', {username, password});
+      const response = await baseApi.post('/park/search', {vehicleNumber});
 
       return response.data;
     } catch (error) {
@@ -17,16 +17,16 @@ export const loginAsync = createAsyncThunk(
 export const findSlice = createSlice({
   name: 'find',
   initialState: {
-    response,
+    findResponse: {},
   },
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(loginAsync.pending, state => {
+    builder.addCase(searchAsync.pending, state => {
       state.status = 'loading';
     });
-    builder.addCase(loginAsync.fulfilled, (state, action) => {
+    builder.addCase(searchAsync.fulfilled, (state, action) => {
       state.status = 'idle';
-      state.response = action.payload;
+      state.findResponse = action.payload;
     });
   },
 });

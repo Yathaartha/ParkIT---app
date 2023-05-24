@@ -2,13 +2,30 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Button, Modal, Text, TextInput} from 'react-native';
 import {primaryColors} from '../../constants/colors';
 import ErrorText from '../common/ErrorText';
+import {useDispatch, useSelector} from 'react-redux';
+import {searchAsync} from './findSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FindBookingForm = ({visible, closeModal, navigation}) => {
   const [vehicleNumber, setVehicleNumber] = useState('');
   const [focus, setFocus] = useState([]);
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const {findResponse} = useSelector(state => state.find);
 
-  const handleSubmit = () => {
-    console.log('Find booking form submitted');
+  const handleSubmit = async () => {
+    const response = await dispatch(searchAsync({vehicleNumber}));
+
+    if (response.payload?.parkingSlot) {
+      await AsyncStorage.setItem(
+        'booking',
+        JSON.stringify(response.payload?.parkingSlot),
+      );
+      navigation.navigate('PostParking');
+    } else {
+      setError('No booking found');
+    }
+    console.log('Find booking form submitted', response.payload);
   };
 
   return (
@@ -34,8 +51,9 @@ const FindBookingForm = ({visible, closeModal, navigation}) => {
             }}
           />
           {focus.includes('vehicleNumber') && vehicleNumber !== '' ? null : (
-            <ErrorText text="Please enter vehicle number" />
+            <ErrorText text={'Please enter vehicle number'} />
           )}
+          <ErrorText text={error} />
           <View
             style={{
               gap: 5,
