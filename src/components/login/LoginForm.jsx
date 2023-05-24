@@ -31,9 +31,9 @@ const LoginForm = ({navigation}) => {
 
   const handleSubmit = async () => {
     try {
-      dispatch(loginAsync({username, password}));
+      const response = await dispatch(loginAsync({username, password}));
 
-      if (loginState.response.data) {
+      if (response.payload?.data) {
         navigation.navigate('AdminDashboard');
       }
     } catch (error) {
