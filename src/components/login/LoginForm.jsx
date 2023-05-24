@@ -6,6 +6,7 @@ import {colors} from '../../constants/colors';
 import styled from 'styled-components';
 import {loginAsync} from './loginSlice';
 import {baseApi} from '../../api/api';
+import ErrorText from '../common/ErrorText';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -49,9 +50,11 @@ const LoginForm = ({navigation}) => {
         onEndEditing={() => setFocus([...focus, 'username'])}
         onChangeText={text => setUsername(text)}
       />
-      <Text>
-        {focus.includes('username') && username === '' ? 'error' : ''}
-      </Text>
+      {focus.includes('username') && username === '' ? (
+        <ErrorText text={'Username is empty'} />
+      ) : (
+        ''
+      )}
       <Input
         secureTextEntry={true}
         placeholder="Password"
@@ -59,9 +62,11 @@ const LoginForm = ({navigation}) => {
         onEndEditing={() => setFocus([...focus, 'password'])}
         onChangeText={text => setPassword(text)}
       />
-      <Text>
-        {focus.includes('password') && password === '' ? 'error' : ''}
-      </Text>
+      {focus.includes('password') && password === '' ? (
+        <ErrorText text="Password is empty" />
+      ) : (
+        ''
+      )}
       <Text>{loginState.response.data ? 'success' : 'invalid'}</Text>
       <PrimaryButton
         title="Login"
