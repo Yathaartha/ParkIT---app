@@ -57,21 +57,21 @@ const ParkingForm = ({navigation}) => {
   const [focus, setFocus] = useState([]);
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const {booking} = useSelector(state => state.book);
 
   const handleSubmit = async needCover => {
-    if (error === '') {
+    if ((error === '') & (vehicleNumber !== '') && estimatedHours !== '') {
       try {
-        const response = dispatch(
+        const response = await dispatch(
           bookParkingSlotAsync({vehicleNumber, estimatedHours, needCover}),
         );
 
         if (response.error) {
           console.log(response.error);
         } else {
+          console.log(response.payload);
           await AsyncStorage.setItem(
             'booking',
-            JSON.stringify(response.payload.data),
+            JSON.stringify(response.payload),
           );
           navigation.navigate('PostParking');
         }

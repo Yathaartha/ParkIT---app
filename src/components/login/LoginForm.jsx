@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Image, StyleSheet} from 'react-native';
 import PrimaryButton from '../common/PrimaryButton';
 import {colors} from '../../constants/colors';
 import styled from 'styled-components';
 import {loginAsync} from './loginSlice';
 import {baseApi} from '../../api/api';
 import ErrorText from '../common/ErrorText';
+import logo from '../../assets/images/logo.png';
 
 const Input = styled.TextInput`
   border-width: 1px;
   border-radius: 10px;
   padding: 10px 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const FormWrap = styled.View`
@@ -35,6 +38,9 @@ const LoginForm = ({navigation}) => {
 
       if (response.payload?.data) {
         navigation.navigate('AdminDashboard');
+        setError('');
+      } else {
+        setError('Invalid username or password');
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +49,9 @@ const LoginForm = ({navigation}) => {
 
   return (
     <FormWrap>
-      <Text>Login Form</Text>
+      <View style={styles.logoWrapper}>
+        <Image source={logo} style={styles.logo} />
+      </View>
       <Input
         placeholder="Username"
         value={username}
@@ -67,7 +75,7 @@ const LoginForm = ({navigation}) => {
       ) : (
         ''
       )}
-      <Text>{loginState.response.data ? 'success' : 'invalid'}</Text>
+      <ErrorText text={error}></ErrorText>
       <PrimaryButton
         title="Login"
         onPress={() => {
@@ -77,5 +85,16 @@ const LoginForm = ({navigation}) => {
     </FormWrap>
   );
 };
+
+const styles = StyleSheet.create({
+  logoWrapper: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+  },
+});
 
 export default LoginForm;

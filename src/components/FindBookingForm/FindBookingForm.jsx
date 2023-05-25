@@ -50,9 +50,9 @@ const FindBookingForm = ({visible, closeModal, navigation}) => {
               marginVertical: 10,
             }}
           />
-          {focus.includes('vehicleNumber') && vehicleNumber !== '' ? null : (
+          {focus.includes('vehicleNumber') && vehicleNumber === '' ? (
             <ErrorText text={'Please enter vehicle number'} />
-          )}
+          ) : null}
           <ErrorText text={error} />
           <View
             style={{

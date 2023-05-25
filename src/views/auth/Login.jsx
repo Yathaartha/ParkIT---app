@@ -5,7 +5,6 @@ import LoginForm from '../../components/login/LoginForm';
 const Login = ({navigation}) => {
   return (
     <View>
-      <Text>Login</Text>
       <LoginForm navigation={navigation} />
     </View>
   );
